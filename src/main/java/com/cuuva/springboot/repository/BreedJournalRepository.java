@@ -32,8 +32,8 @@ public interface BreedJournalRepository extends JpaRepository<BreedJournal, Inte
             + "SUM(prev_total_feed) AS pretotalfeed, "
             + "SUM(total_feed) AS totalfeed "
             + "FROM ef_breed_journal "
-            + "WHERE breed_journal_dt=?1 AND line_sn=?2 AND eel_farm_sn=?3"
-        , nativeQuery = true
+            + "WHERE breed_journal_dt=?1 AND line_sn=?2 AND eel_farm_sn=?3",
+        nativeQuery = true
     )
     BreedJournalTotal findWithNativeQuery(LocalDate breedJournalDt, Integer lineSn, Integer eelFarmSn);
 

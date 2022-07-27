@@ -1,64 +1,46 @@
 package com.cuuva.springboot.controller;
 
+import com.cuuva.springboot.model.out.OutJournal;
+import com.cuuva.springboot.repository.OutJournalRepository;
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cuuva.springboot.model.out.OutJournal;
-import com.cuuva.springboot.repository.OutJournalRepository;
-
+@RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/")
+@RequestMapping("/outjournal")
 public class OutJournalController {
 
-	@Autowired
-	private OutJournalRepository outjournalRepository;
+	private final OutJournalRepository outjournalRepository;
 
-	@GetMapping("/outjournal")
-	public List<OutJournal>getAllOutJournals(){
-		return outjournalRepository.findAll();
+	@GetMapping
+	public List<OutJournal> getList(@Param("outManageJournalSn") Integer outManageJournalSn){
+		return outjournalRepository
+			.findAllByOutManageJournalOutManageJournalSn(outManageJournalSn);
 	}
 
-	@PostMapping("/outjournal")
-	public OutJournal createOutJournal(@RequestBody OutJournal outjournal) {
-		return outjournalRepository.save(outjournal);
+	@PostMapping
+	public OutJournal post(@RequestBody OutJournal outJournal) {
+		return outjournalRepository.save(outJournal);
 	}
 
-//	@GetMapping("/outmanagejournal/isDate")
-//	private
+	@PutMapping
+	public OutJournal put(@RequestBody OutJournal outJournal) {
+		return outjournalRepository.save(outJournal);
+	}
 
-//	@PutMapping("/outjournal")
-//	public ResponseEntity<OutJournal> updateOutJournal(@Param("eelFarmSn") Integer eelFarmSn,@Param("outJournalSn") Integer outJournalSn,@RequestBody OutJournal outjournalDetails){
-//		OutJournal outjournal = outjournalRepository.findbyEelFarmSnAndOutJournalSn(eelFarmSn,outJournalSn)
-//				.orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + eelFarmSn,outJournalSn));
-//
-//		outjournal.setWatertankSn(outjournalDetails.getWatertankSn());
-//		outjournal.setBreedSpecies(outjournalDetails.getBreedSpecies());
-//		outjournal.setBreedCount(outjournalDetails.getBreedCount());
-//		outjournal.setAverageWeight(outjournalDetails.getAverageWeight());
-//
-//		OutJournal updatedOutJournal = outjournalRepository.save(outjournal);
-//
-//		return ResponseEntity.ok(updatedOutJournal);
-//	}
-
-//	@DeleteMapping("/outjournal")
-//	public ResponseEntity<Map<String, Boolean>> deleteOutJournal(@Param("eelFarmSn") Integer eelFarmSn,@Param("outJournalSn") Integer outJournalSn){
-//		OutJournal outjournal = outjournalRepository.findbyEelFarmCommon_EelFarmSnAndOutJournalSn(eelFarmSn,outJournalSn);
-//				//.orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + outManageJournalDt));
-//
-//		outjournalRepository.delete(outjournal);
-//		Map<String, Boolean> response = new HashMap<>();
-//		response.put("deleted", Boolean.TRUE);
-//		return ResponseEntity.ok(response);
-//	}
-
-
+	@DeleteMapping("/{outJournalSn}")
+	public void delete(@PathVariable Integer outJournalSn) {
+		outjournalRepository.deleteById(outJournalSn);
+	}
 }
