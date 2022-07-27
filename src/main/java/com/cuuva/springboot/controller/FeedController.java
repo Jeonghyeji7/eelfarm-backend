@@ -32,8 +32,9 @@ public class FeedController {
 		Optional<Feed> optionalCurrentFeed = feedRepository.findById(feedCode);
 
 		if (optionalCurrentFeed.isPresent()) {
-			feed.setFeedName(feed.getFeedName());
-			feedRepository.save(feed);
+			Feed currentFeed = optionalCurrentFeed.get();
+			currentFeed.setFeedName(feed.getFeedName());
+			feedRepository.save(currentFeed);
 		}
 
 		return null;
@@ -44,8 +45,9 @@ public class FeedController {
 		Optional<Feed> optionalCurrentFeed = feedRepository.findById(feedCode);
 
 		if (optionalCurrentFeed.isPresent()) {
-			feed.setFeedStandard(feed.getFeedStandard());
-			feedRepository.save(feed);
+			Feed currentFeed = optionalCurrentFeed.get();
+			currentFeed.setFeedStandard(feed.getFeedStandard());
+			feedRepository.save(currentFeed);
 		}
 
 		return null;
