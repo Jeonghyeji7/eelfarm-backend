@@ -1,5 +1,8 @@
-package com.cuuva.springboot.model;
+package com.cuuva.springboot.model.feed;
 
+import com.cuuva.springboot.model.EelFarmCommon;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,30 +21,23 @@ import org.hibernate.annotations.Comment;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@Table(
-		name = "ef_out_manage_journal",
+@Table(name = "ef_feed_manage_journal",
 		uniqueConstraints = {
 				@UniqueConstraint(columnNames = {
-						"eel_farm_sn",
-						"out_manage_journal_year",
-						"out_manage_journal_month"
+						"feed_manage_journal_dt",
 				})
-		}
-)
-public class OutManageJournal {
+		})
+public class FeedManageJournal {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "out_manage_journal_sn", length = 11)
-	private Integer outManageJournalSn;
+	@Column(name = "feed_manage_journal_sn", length = 11)
+	private Integer feedManageJournalSn;
 
-	@Comment("연도")
-	@Column(name = "out_manage_journal_year", length = 50)
-	private String outManageJournalYear;
-
-	@Comment("월날짜")
-	@Column(name = "out_manage_journal_month", length = 50)
-	private String outManageJournalMonth;
+	@Comment("날짜")
+	@Column(name = "feed_manage_journal_dt")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+	private LocalDate feedManageJournalDt;
 
 	@Comment("양만장 일련 번호")
 	@ManyToOne

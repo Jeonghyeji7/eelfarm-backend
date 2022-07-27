@@ -10,22 +10,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cuuva.springboot.model.OutJournal;
+import com.cuuva.springboot.model.out.OutJournal;
 import com.cuuva.springboot.repository.OutJournalRepository;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/")
 public class OutJournalController {
-	
+
 	@Autowired
 	private OutJournalRepository outjournalRepository;
-	
+
 	@GetMapping("/outjournal")
 	public List<OutJournal>getAllOutJournals(){
 		return outjournalRepository.findAll();
 	}
-	
+
 	@PostMapping("/outjournal")
 	public OutJournal createOutJournal(@RequestBody OutJournal outjournal) {
 		return outjournalRepository.save(outjournal);
@@ -33,7 +33,7 @@ public class OutJournalController {
 
 //	@GetMapping("/outmanagejournal/isDate")
 //	private
-	
+
 //	@PutMapping("/outjournal")
 //	public ResponseEntity<OutJournal> updateOutJournal(@Param("eelFarmSn") Integer eelFarmSn,@Param("outJournalSn") Integer outJournalSn,@RequestBody OutJournal outjournalDetails){
 //		OutJournal outjournal = outjournalRepository.findbyEelFarmSnAndOutJournalSn(eelFarmSn,outJournalSn)
@@ -48,7 +48,7 @@ public class OutJournalController {
 //
 //		return ResponseEntity.ok(updatedOutJournal);
 //	}
-	
+
 //	@DeleteMapping("/outjournal")
 //	public ResponseEntity<Map<String, Boolean>> deleteOutJournal(@Param("eelFarmSn") Integer eelFarmSn,@Param("outJournalSn") Integer outJournalSn){
 //		OutJournal outjournal = outjournalRepository.findbyEelFarmCommon_EelFarmSnAndOutJournalSn(eelFarmSn,outJournalSn);
@@ -59,6 +59,6 @@ public class OutJournalController {
 //		response.put("deleted", Boolean.TRUE);
 //		return ResponseEntity.ok(response);
 //	}
-	
+
 
 }

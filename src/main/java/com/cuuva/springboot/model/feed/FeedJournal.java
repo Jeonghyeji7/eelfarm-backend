@@ -1,4 +1,4 @@
-package com.cuuva.springboot.model;
+package com.cuuva.springboot.model.feed;
 
 import java.math.BigDecimal;
 import java.util.Objects;

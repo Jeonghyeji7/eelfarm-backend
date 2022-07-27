@@ -1,12 +1,20 @@
 package com.cuuva.springboot.model;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.Comment;
 
 
+@Getter
+@Setter
+@RequiredArgsConstructor
 @Entity
 @Table(name = "eel_farm_common")
 public class EelFarmCommon {
@@ -26,4 +34,22 @@ public class EelFarmCommon {
 	@Comment("양만장 대표전화번호")
 	@Column(name = "eel_farm_phone_number",length = 50)
 	private String eelFarmPhoneNumber;
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || Hibernate.getClass(this) != Hibernate.getClass(
+			o)) {
+			return false;
+		}
+		EelFarmCommon that = (EelFarmCommon) o;
+		return eelFarmSn != null && Objects.equals(eelFarmSn, that.eelFarmSn);
+	}
+
+	@Override
+	public int hashCode() {
+		return getClass().hashCode();
+	}
 }

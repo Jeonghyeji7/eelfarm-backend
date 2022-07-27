@@ -1,45 +1,53 @@
 package com.cuuva.springboot.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import com.cuuva.springboot.model.Feed;
+import com.cuuva.springboot.model.feed.Feed;
 import com.cuuva.springboot.repository.FeedRepository;
+import java.util.List;
+import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/")
+@RequestMapping("/feeds")
 public class FeedController {
-	
-	@Autowired
-	private FeedRepository feedRepository;
-	
-	@GetMapping("/feed")
-	public List<Feed> getAllFeeds(){
-		return feedRepository.findAll();
-	}
-	
-	@PostMapping("/feed")
-	public Feed createFeed(@RequestBody Feed feed) {
-		return feedRepository.save(feed);
+
+	private final FeedRepository feedRepository;
+
+	@GetMapping
+	public List<Feed> getList(@Param("number") Integer eelFarmSn){
+		return feedRepository.findAllByEelFarmCommonEelFarmSn(eelFarmSn);
 	}
 
-//	@PutMapping("/feed")
-//	public ResponseEntity<Feed> editFeed(@Param("feedCode") Integer feedCode, @RequestBody Feed feedDetails){
-//		Feed feed = feedRepository.findById(feedCode)
-//				.orElseThrow(()->new ResourceNotFoundException("id"+feedCode));
-//
-//		feed.setFeedName(feedDetails.getFeedName());
-//		feed.setFeedStandard(feedDetails.getFeedStandard());
-//		feed.setFeedSellerCode(feedDetails.getFeedSellerCode());
-//
-//		Feed uptatedFeed = feedRepository.save(feed);
-//
-//		return ResponseEntity.ok(uptatedFeed);
-//	}
+	@PutMapping("/{feedCode}/name")
+	public Feed putName(@PathVariable Integer feedCode, @RequestBody Feed feed) {
+		Optional<Feed> optionalCurrentFeed = feedRepository.findById(feedCode);
 
+		if (optionalCurrentFeed.isPresent()) {
+			feed.setFeedName(feed.getFeedName());
+			feedRepository.save(feed);
+		}
+
+		return null;
+	}
+
+	@PutMapping("/{feedCode}/standard")
+	public Feed putStandard(@PathVariable Integer feedCode, @RequestBody Feed feed) {
+		Optional<Feed> optionalCurrentFeed = feedRepository.findById(feedCode);
+
+		if (optionalCurrentFeed.isPresent()) {
+			feed.setFeedStandard(feed.getFeedStandard());
+			feedRepository.save(feed);
+		}
+
+		return null;
+	}
 }

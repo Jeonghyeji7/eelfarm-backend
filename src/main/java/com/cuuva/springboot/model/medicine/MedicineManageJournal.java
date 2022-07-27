@@ -1,5 +1,6 @@
-package com.cuuva.springboot.model;
+package com.cuuva.springboot.model.medicine;
 
+import com.cuuva.springboot.model.EelFarmCommon;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

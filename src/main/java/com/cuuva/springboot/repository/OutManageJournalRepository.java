@@ -2,7 +2,7 @@ package com.cuuva.springboot.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.cuuva.springboot.model.OutManageJournal;
+import com.cuuva.springboot.model.out.OutManageJournal;
 
 public interface OutManageJournalRepository extends JpaRepository<OutManageJournal, Integer>{
 

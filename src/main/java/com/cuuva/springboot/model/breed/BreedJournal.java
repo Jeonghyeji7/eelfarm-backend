@@ -1,5 +1,8 @@
-package com.cuuva.springboot.model;
+package com.cuuva.springboot.model.breed;
 
+import com.cuuva.springboot.model.EelFarmCommon;
+import com.cuuva.springboot.model.LineInfo;
+import com.cuuva.springboot.model.WatertankInfo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -28,8 +31,8 @@ public class BreedJournal {
 	@Comment("일지 일련번호")
 	@Id
 	@Column(name = "breed_journal_sn")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long breedJournalSn;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer breedJournalSn;
 
 	@Comment("양반장일련번호")
 	@ManyToOne

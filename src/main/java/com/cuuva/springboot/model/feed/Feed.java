@@ -1,5 +1,6 @@
-package com.cuuva.springboot.model;
+package com.cuuva.springboot.model.feed;
 
+import com.cuuva.springboot.model.EelFarmCommon;
 import java.io.Serializable;
 
 import javax.persistence.Column;

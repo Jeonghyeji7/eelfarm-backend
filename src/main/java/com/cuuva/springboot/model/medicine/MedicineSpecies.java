@@ -1,5 +1,6 @@
-package com.cuuva.springboot.model;
+package com.cuuva.springboot.model.medicine;
 
+import com.cuuva.springboot.model.EelFarmCommon;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +13,6 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.Comment;
 
