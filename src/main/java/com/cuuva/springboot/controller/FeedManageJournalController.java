@@ -26,7 +26,7 @@ public class FeedManageJournalController {
 	public FeedManageJournal getListIsDate(
 		@Param("day") LocalDate feedManageJournalDt,
 		@Param("number") Integer eelFarmSn
-	){
+	) {
 		return feedmanagejournalRepository
 			.findByFeedManageJournalDtAndEelFarmCommonEelFarmSn(
 				feedManageJournalDt, eelFarmSn
@@ -45,7 +45,7 @@ public class FeedManageJournalController {
 	@GetMapping("/year")
 	public List<String> getListSearchYear(
 		@Param("number") Integer eelFarmSn
-	){
+	) {
 		return feedmanagejournalRepository.findWithNativeQuery2(eelFarmSn);
 	}
 
@@ -53,8 +53,17 @@ public class FeedManageJournalController {
 	public List<String> getListSearchMonth(
 		@Param("year") String year,
 		@Param("number") Integer eelFarmSn
-	){
+	) {
 		return feedmanagejournalRepository.findWithNativeQuery3(year, eelFarmSn);
+	}
+
+	@GetMapping("/journalCheck")
+	public String getJournalCheck(
+		@Param("year") String year,
+		@Param("month") String month,
+		@Param("number") Integer eelFarmSn
+	) {
+		return feedmanagejournalRepository.findWithNativeQuery4(year, month, eelFarmSn);
 	}
 
 	@PostMapping
