@@ -64,6 +64,8 @@ public class MedicineManageJournalController {
 
 	@PostMapping
 	public MedicineManageJournalDTO post(@RequestBody MedicineManageJournal medicineManageJournal) {
+
+
 		return new MedicineManageJournalDTO(medicineManageJournalRepository.save(medicineManageJournal));
 	}
 

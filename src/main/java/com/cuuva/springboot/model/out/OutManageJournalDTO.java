@@ -21,8 +21,10 @@ public class OutManageJournalDTO {
 
 		outJournalList = new ArrayList<>();
 
-		for (OutJournal outJournal : outManageJournal.getOutJournalList()) {
-			outJournalList.add(new OutJournalDTO(outJournal));
+		if (outManageJournal.getOutJournalList() != null) {
+			for (OutJournal outJournal : outManageJournal.getOutJournalList()) {
+				outJournalList.add(new OutJournalDTO(outJournal));
+			}
 		}
 	}
 }

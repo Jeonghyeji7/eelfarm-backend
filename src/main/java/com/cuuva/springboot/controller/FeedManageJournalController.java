@@ -34,6 +34,10 @@ public class FeedManageJournalController {
 						feedManageJournalDt, eelFarmSn
 				);
 
+		if (feedManageJournal == null) {
+			return null;
+		}
+
 		return new FeedManageJournalDTO(feedManageJournal);
 	}
 

@@ -3,6 +3,8 @@ package com.cuuva.springboot.model;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.Getter;
@@ -19,6 +21,7 @@ import org.hibernate.annotations.Comment;
 @Table(name = "eel_farm_common")
 public class EelFarmCommon {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "eel_farm_sn",length = 11)
 	@Comment("양만장 일련 번호")
 	private Integer eelFarmSn;

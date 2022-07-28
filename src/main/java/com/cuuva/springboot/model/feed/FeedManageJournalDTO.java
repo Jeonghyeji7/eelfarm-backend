@@ -24,8 +24,10 @@ public class FeedManageJournalDTO {
 
 		feedJournalList = new ArrayList<>();
 
-		for (FeedJournal feedJournal : feedManageJournal.getFeedJournalList()) {
-			feedJournalList.add(new FeedJournalDTO(feedJournal));
+		if (feedManageJournal.getFeedJournalList() != null) {
+			for (FeedJournal feedJournal : feedManageJournal.getFeedJournalList()) {
+				feedJournalList.add(new FeedJournalDTO(feedJournal));
+			}
 		}
 	}
 }

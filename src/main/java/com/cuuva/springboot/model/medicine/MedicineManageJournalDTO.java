@@ -21,8 +21,10 @@ public class MedicineManageJournalDTO {
 
 		medicineJournalList = new ArrayList<>();
 
-		for (MedicineJournal medicineJournal : medicineManageJournal.getMedicineJournalList()) {
-			medicineJournalList.add(new MedicineJournalDTO(medicineJournal));
+		if (medicineManageJournal.getMedicineJournalList() != null) {
+			for (MedicineJournal medicineJournal : medicineManageJournal.getMedicineJournalList()) {
+				medicineJournalList.add(new MedicineJournalDTO(medicineJournal));
+			}
 		}
 	}
 }
