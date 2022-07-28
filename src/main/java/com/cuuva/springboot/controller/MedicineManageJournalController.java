@@ -58,7 +58,9 @@ public class MedicineManageJournalController {
 	}
 
 	@DeleteMapping("/{medicineManageSn}")
-	public void delete(@PathVariable Integer medicineManageSn) {
+	public boolean delete(@PathVariable Integer medicineManageSn) {
 		medicineManageJournalRepository.deleteById(medicineManageSn);
+
+		return true;
 	}
 }

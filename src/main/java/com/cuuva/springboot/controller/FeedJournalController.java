@@ -1,7 +1,12 @@
 package com.cuuva.springboot.controller;
 
 import com.cuuva.springboot.model.feed.FeedJournal;
+import com.cuuva.springboot.model.feed.FeedJournalDTO;
+import com.cuuva.springboot.model.feed.FeedManageJournal;
+import com.cuuva.springboot.model.feed.FeedManageJournalDTO;
 import com.cuuva.springboot.repository.FeedJournalRepository;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -24,16 +29,27 @@ public class FeedJournalController {
 	private final FeedJournalRepository feedJournalRepository;
 
 	@GetMapping("/{feedJournalSn}")
-	public FeedJournal get(@PathVariable Integer feedJournalSn) {
-		return feedJournalRepository.findById(feedJournalSn).orElse(null);
+	public FeedJournalDTO get(@PathVariable Integer feedJournalSn) {
+		FeedJournal feedJournal = feedJournalRepository
+				.findById(feedJournalSn).orElse(null);
+
+		return new FeedJournalDTO(feedJournal);
 	}
 
 	@GetMapping
-	public List<FeedJournal> getList(
+	public List<FeedJournalDTO> getList(
 		@RequestParam("feedManageJournalSn") Integer feedManageJournalSn
 	){
-		return feedJournalRepository
-			.findAllByFeedManageJournalFeedManageJournalSn(feedManageJournalSn);
+		List<FeedJournal> feedJournalList = feedJournalRepository
+				.findAllByFeedManageJournalFeedManageJournalSn(feedManageJournalSn);
+
+		List<FeedJournalDTO> feedJournalDTOList = new ArrayList<>();
+
+		for (FeedJournal feedJournal : feedJournalList) {
+			feedJournalDTOList.add(new FeedJournalDTO(feedJournal));
+		}
+
+		return feedJournalDTOList;
 	}
 
 	@PostMapping
@@ -55,10 +71,10 @@ public class FeedJournalController {
 	}
 
 	@PutMapping("/{feedJournalSn}")
-	public FeedJournal put(@PathVariable Integer feedJournalSn, @RequestBody FeedJournal feedJournal) {
+	public FeedJournalDTO put(@PathVariable Integer feedJournalSn, @RequestBody FeedJournal feedJournal) {
 		if (feedJournalSn != null) {
 			feedJournal.setFeedJournalSn(feedJournalSn);
-			return feedJournalRepository.save(feedJournal);
+			return new FeedJournalDTO(feedJournalRepository.save(feedJournal));
 		}
 
 		return null;

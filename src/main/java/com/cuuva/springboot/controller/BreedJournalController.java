@@ -1,11 +1,12 @@
 package com.cuuva.springboot.controller;
 
 import com.cuuva.springboot.model.breed.BreedJournal;
-import com.cuuva.springboot.model.breed.BreedJournalTotal;
+import com.cuuva.springboot.model.breed.BreedJournalTotalInterface;
 import com.cuuva.springboot.repository.BreedJournalRepository;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +26,7 @@ public class BreedJournalController {
 
 	@GetMapping
 	public List<BreedJournal> getList(
-		@RequestParam("date") LocalDate breedJournalDt,
+		@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate breedJournalDt,
 		@RequestParam("line") Integer lineSn,
 		@RequestParam("number") Integer eelFarmSn
 	) {
@@ -34,7 +35,7 @@ public class BreedJournalController {
 
 	@GetMapping("/feed")
 	public List<BreedJournal> getListFeed(
-		@RequestParam("date") LocalDate breedJournalDt,
+		@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate breedJournalDt,
 		@RequestParam("number") Integer eelFarmSn
 	) {
 		return breedjournalRepository.findAllByBreedJournalDtAndEelFarmCommonEelFarmSn(breedJournalDt, eelFarmSn);
@@ -42,7 +43,7 @@ public class BreedJournalController {
 
 	@GetMapping("/pre")
 	public List<BreedJournal> getListPre(
-		@RequestParam("preDate") LocalDate breedJournalDt,
+		@RequestParam("preDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate breedJournalDt,
 		@RequestParam("line") Integer lineSn,
 		@RequestParam("water") Integer watertankSn,
 		@RequestParam("number") Integer eelFarmSn
@@ -51,8 +52,8 @@ public class BreedJournalController {
 	}
 
 	@GetMapping("/total")
-	public BreedJournalTotal getTotal(
-		@RequestParam("date") LocalDate breedJournalDt,
+	public BreedJournalTotalInterface getTotal(
+		@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate breedJournalDt,
 		@RequestParam("line") Integer lineSn,
 		@RequestParam("number") Integer eelFarmSn
 	) {
@@ -70,7 +71,7 @@ public class BreedJournalController {
 	}
 
 	@PutMapping("/onlyPreData")
-	public BreedJournal putOnlyPreData(@RequestBody BreedJournal breedJournal) {
-		return breedjournalRepository.saveWithNativeQuery(breedJournal);
+	public void putOnlyPreData(@RequestBody BreedJournal breedJournal) {
+		breedjournalRepository.saveWithNativeQuery(breedJournal);
 	}
 }

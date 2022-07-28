@@ -15,15 +15,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
+import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Comment;
 
-@Entity
 @Getter
 @Setter
 @RequiredArgsConstructor
+@Entity
 @Table(name = "ef_feed_manage_journal",
 		uniqueConstraints = {
 				@UniqueConstraint(columnNames = {

@@ -1,10 +1,13 @@
 package com.cuuva.springboot.controller;
 
 import com.cuuva.springboot.model.feed.FeedManageJournal;
+import com.cuuva.springboot.model.feed.FeedManageJournalDTO;
 import com.cuuva.springboot.repository.FeedManageJournalRepository;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,23 +25,34 @@ public class FeedManageJournalController {
 	private final FeedManageJournalRepository feedmanagejournalRepository;
 
 	@GetMapping
-	public FeedManageJournal getListIsDate(
-		@RequestParam("day") LocalDate feedManageJournalDt,
+	public FeedManageJournalDTO getListIsDate(
+		@RequestParam("day") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate feedManageJournalDt,
 		@RequestParam("number") Integer eelFarmSn
 	) {
-		return feedmanagejournalRepository
-			.findByFeedManageJournalDtAndEelFarmCommonEelFarmSn(
-				feedManageJournalDt, eelFarmSn
-			);
+		FeedManageJournal feedManageJournal = feedmanagejournalRepository
+				.findByFeedManageJournalDtAndEelFarmCommonEelFarmSn(
+						feedManageJournalDt, eelFarmSn
+				);
+
+		return new FeedManageJournalDTO(feedManageJournal);
 	}
 
 	@GetMapping("/selectYearMonth")
-	public List<FeedManageJournal> getListIsDate(
+	public List<FeedManageJournalDTO> getListIsDate(
 		@RequestParam("year") String year,
 		@RequestParam("month") String month,
 		@RequestParam("number") Integer eelFarmSn
 	){
-		return feedmanagejournalRepository.findWithNativeQuery1(year, month, eelFarmSn);
+		List<FeedManageJournal> feedManageJournalList = feedmanagejournalRepository
+				.findWithNativeQuery1(year, month, eelFarmSn);
+
+		List<FeedManageJournalDTO> feedManageJournalDTOList = new ArrayList<>();
+
+		for (FeedManageJournal feedManageJournal : feedManageJournalList) {
+			feedManageJournalDTOList.add(new FeedManageJournalDTO(feedManageJournal));
+		}
+
+		return feedManageJournalDTOList;
 	}
 
 	@GetMapping("/year")

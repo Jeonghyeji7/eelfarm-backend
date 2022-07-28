@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/")
+@RequestMapping("/outmanagejournal")
 public class OutManageJournalController {
 
 	private final OutManageJournalRepository outManageJournalRepository;
@@ -58,7 +58,9 @@ public class OutManageJournalController {
 	}
 
 	@DeleteMapping("/{outManageSn}")
-	public void delete(@PathVariable Integer outManageSn) {
+	public boolean delete(@PathVariable Integer outManageSn) {
 		outManageJournalRepository.deleteById(outManageSn);
+
+		return true;
 	}
 }

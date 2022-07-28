@@ -1,7 +1,7 @@
 package com.cuuva.springboot.repository;
 
 import com.cuuva.springboot.model.breed.BreedJournal;
-import com.cuuva.springboot.model.breed.BreedJournalTotal;
+import com.cuuva.springboot.model.breed.BreedJournalTotalInterface;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -27,17 +27,17 @@ public interface BreedJournalRepository extends JpaRepository<BreedJournal, Inte
             + "SUM(feed_quantity_sum) AS feedSum, "
             + "SUM(breed_count) as count, "
             + "SUM(weight) AS weight, "
-            + "SUM(average_weight) as av_weight, "
-            + "SUM(standard_feed) as s_feed, "
-            + "SUM(prev_total_feed) AS pretotalfeed, "
-            + "SUM(total_feed) AS totalfeed "
+            + "SUM(average_weight) as avWeight, "
+            + "SUM(standard_feed) as sFeed, "
+            + "SUM(prev_total_feed) AS preTotalFeed, "
+            + "SUM(total_feed) AS totalFeed "
             + "FROM ef_breed_journal "
-            + "WHERE breed_journal_dt=?1 AND line_sn=?2 AND eel_farm_sn=?3",
+            + "WHERE breed_journal_dt=DATE_FORMAT(?1, '%Y-%m-%d') AND line_sn=?2 AND eel_farm_sn=?3",
         nativeQuery = true
     )
-    BreedJournalTotal findWithNativeQuery(LocalDate breedJournalDt, Integer lineSn, Integer eelFarmSn);
+    BreedJournalTotalInterface findWithNativeQuery(LocalDate breedJournalDt, Integer lineSn, Integer eelFarmSn);
 
-    @Modifying
+//    @Modifying
     @Query(value =
         "UPDATE ef_breed_journal "
             + "SET "
@@ -50,5 +50,5 @@ public interface BreedJournalRepository extends JpaRepository<BreedJournal, Inte
             + "eel_farm_sn = :#{#breedJournal.eelFarmCommon.eelFarmSn}"
         , nativeQuery = true
     )
-    BreedJournal saveWithNativeQuery(@Param("breedJournal") BreedJournal breedJournal);
+    void saveWithNativeQuery(@Param("breedJournal") BreedJournal breedJournal);
 }
