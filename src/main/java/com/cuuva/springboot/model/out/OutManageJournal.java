@@ -1,6 +1,8 @@
 package com.cuuva.springboot.model.out;
 
 import com.cuuva.springboot.model.EelFarmCommon;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import lombok.Getter;
@@ -48,4 +51,8 @@ public class OutManageJournal {
 	@ManyToOne
 	@JoinColumn(name = "eel_farm_sn", referencedColumnName = "eel_farm_sn")
 	private EelFarmCommon eelFarmCommon;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "out_manage_journal_sn", referencedColumnName = "out_manage_journal_sn")
+	private List<OutJournal> outJournalList;
 }

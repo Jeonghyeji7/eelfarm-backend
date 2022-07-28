@@ -4,7 +4,6 @@ import com.cuuva.springboot.model.out.OutManageJournal;
 import com.cuuva.springboot.repository.OutManageJournalRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
@@ -24,9 +24,9 @@ public class OutManageJournalController {
 
 	@GetMapping("/isDate")
 	public List<OutManageJournal> getListIsDate(
-		@Param("year") String year,
-		@Param("month") String month,
-		@Param("number") Integer eelFarmSn
+		@RequestParam("year") String year,
+		@RequestParam("month") String month,
+		@RequestParam("number") Integer eelFarmSn
 	){
 		return outManageJournalRepository
 			.findAllByOutManageJournalYearAndOutManageJournalMonthAndEelFarmCommonEelFarmSn(
@@ -36,8 +36,8 @@ public class OutManageJournalController {
 
 	@GetMapping("/searchMonth")
 	public List<String> getListSearchMonth(
-		@Param("year") String year,
-		@Param("number") Integer eelFarmSn
+		@RequestParam("year") String year,
+		@RequestParam("number") Integer eelFarmSn
 	){
 		return outManageJournalRepository
 			.findWithNativeQuery1(
@@ -47,7 +47,7 @@ public class OutManageJournalController {
 
 	@GetMapping("/searchYear")
 	public List<String> getListSearchYear(
-		@Param("number") Integer eelFarmSn
+		@RequestParam("number") Integer eelFarmSn
 	){
 		return outManageJournalRepository.findWithNativeQuery2(eelFarmSn);
 	}

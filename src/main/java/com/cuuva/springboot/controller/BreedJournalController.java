@@ -6,13 +6,13 @@ import com.cuuva.springboot.repository.BreedJournalRepository;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
@@ -25,36 +25,36 @@ public class BreedJournalController {
 
 	@GetMapping
 	public List<BreedJournal> getList(
-		@Param("date") LocalDate breedJournalDt,
-		@Param("line") Integer lineSn,
-		@Param("number") Integer eelFarmSn
+		@RequestParam("date") LocalDate breedJournalDt,
+		@RequestParam("line") Integer lineSn,
+		@RequestParam("number") Integer eelFarmSn
 	) {
 		return breedjournalRepository.findAllByBreedJournalDtAndLineInfoLineSnAndEelFarmCommonEelFarmSn(breedJournalDt, lineSn, eelFarmSn);
 	}
 
 	@GetMapping("/feed")
 	public List<BreedJournal> getListFeed(
-		@Param("date") LocalDate breedJournalDt,
-		@Param("number") Integer eelFarmSn
+		@RequestParam("date") LocalDate breedJournalDt,
+		@RequestParam("number") Integer eelFarmSn
 	) {
 		return breedjournalRepository.findAllByBreedJournalDtAndEelFarmCommonEelFarmSn(breedJournalDt, eelFarmSn);
 	}
 
 	@GetMapping("/pre")
 	public List<BreedJournal> getListPre(
-		@Param("preDate") LocalDate breedJournalDt,
-		@Param("line") Integer lineSn,
-		@Param("water") Integer watertankSn,
-		@Param("number") Integer eelFarmSn
+		@RequestParam("preDate") LocalDate breedJournalDt,
+		@RequestParam("line") Integer lineSn,
+		@RequestParam("water") Integer watertankSn,
+		@RequestParam("number") Integer eelFarmSn
 	) {
 		return breedjournalRepository.findAllByBreedJournalDtAndLineInfoLineSnAndWatertankInfoWatertankSnAndEelFarmCommonEelFarmSn(breedJournalDt, lineSn, watertankSn, eelFarmSn);
 	}
 
 	@GetMapping("/total")
 	public BreedJournalTotal getTotal(
-		@Param("date") LocalDate breedJournalDt,
-		@Param("line") Integer lineSn,
-		@Param("number") Integer eelFarmSn
+		@RequestParam("date") LocalDate breedJournalDt,
+		@RequestParam("line") Integer lineSn,
+		@RequestParam("number") Integer eelFarmSn
 	) {
 		return breedjournalRepository.findWithNativeQuery(breedJournalDt, lineSn, eelFarmSn);
 	}

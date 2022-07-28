@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
@@ -23,7 +24,7 @@ public class FeedController {
 	private final FeedRepository feedRepository;
 
 	@GetMapping
-	public List<Feed> getList(@Param("number") Integer eelFarmSn){
+	public List<Feed> getList(@RequestParam("number") Integer eelFarmSn){
 		return feedRepository.findAllByEelFarmCommonEelFarmSn(eelFarmSn);
 	}
 

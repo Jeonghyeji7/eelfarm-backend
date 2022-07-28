@@ -4,7 +4,6 @@ import com.cuuva.springboot.model.out.OutJournal;
 import com.cuuva.springboot.repository.OutJournalRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
@@ -24,7 +24,7 @@ public class OutJournalController {
 	private final OutJournalRepository outjournalRepository;
 
 	@GetMapping
-	public List<OutJournal> getList(@Param("outManageJournalSn") Integer outManageJournalSn){
+	public List<OutJournal> getList(@RequestParam("outManageJournalSn") Integer outManageJournalSn){
 		return outjournalRepository
 			.findAllByOutManageJournalOutManageJournalSn(outManageJournalSn);
 	}

@@ -4,7 +4,6 @@ import com.cuuva.springboot.model.medicine.MedicineManageJournal;
 import com.cuuva.springboot.repository.MedicineManageJournalRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
@@ -24,9 +24,9 @@ public class MedicineManageJournalController {
 
 	@GetMapping("/isDate")
 	public List<MedicineManageJournal> getListIsDate(
-		@Param("year") String year,
-		@Param("month") String month,
-		@Param("number") Integer eelFarmSn
+		@RequestParam("year") String year,
+		@RequestParam("month") String month,
+		@RequestParam("number") Integer eelFarmSn
 	){
 		return medicineManageJournalRepository
 			.findAllByMedicineManageJournalYearAndMedicineManageJournalMonthAndEelFarmCommonEelFarmSn(
@@ -36,8 +36,8 @@ public class MedicineManageJournalController {
 
 	@GetMapping("/searchMonth")
 	public List<String> getListSearchMonth(
-		@Param("year") String year,
-		@Param("number") Integer eelFarmSn
+		@RequestParam("year") String year,
+		@RequestParam("number") Integer eelFarmSn
 	){
 		return medicineManageJournalRepository
 			.findWithNativeQuery1(
@@ -47,7 +47,7 @@ public class MedicineManageJournalController {
 
 	@GetMapping("/searchYear")
 	public List<String> getListSearchYear(
-		@Param("number") Integer eelFarmSn
+		@RequestParam("number") Integer eelFarmSn
 	){
 		return medicineManageJournalRepository.findWithNativeQuery2(eelFarmSn);
 	}
