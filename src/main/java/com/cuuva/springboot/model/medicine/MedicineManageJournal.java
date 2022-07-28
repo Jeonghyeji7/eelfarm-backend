@@ -55,6 +55,4 @@ public class MedicineManageJournal {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "medicine_manage_sn", referencedColumnName = "medicine_manage_sn")
 	private List<MedicineJournal> medicineJournalList;
-
-
 }

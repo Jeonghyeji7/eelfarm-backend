@@ -1,7 +1,9 @@
 package com.cuuva.springboot.controller;
 
 import com.cuuva.springboot.model.medicine.MedicineManageJournal;
+import com.cuuva.springboot.model.medicine.MedicineManageJournalDTO;
 import com.cuuva.springboot.repository.MedicineManageJournalRepository;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,15 +25,23 @@ public class MedicineManageJournalController {
 	private final MedicineManageJournalRepository medicineManageJournalRepository;
 
 	@GetMapping("/isDate")
-	public List<MedicineManageJournal> getListIsDate(
+	public List<MedicineManageJournalDTO> getListIsDate(
 		@RequestParam("year") String year,
 		@RequestParam("month") String month,
 		@RequestParam("number") Integer eelFarmSn
 	){
-		return medicineManageJournalRepository
+		List<MedicineManageJournal> medicineManageJournalList = medicineManageJournalRepository
 			.findAllByMedicineManageJournalYearAndMedicineManageJournalMonthAndEelFarmCommonEelFarmSn(
 			year, month, eelFarmSn
 		);
+
+		List<MedicineManageJournalDTO> medicineManageJournalDTOList = new ArrayList<>();
+
+		for (MedicineManageJournal medicineJournal : medicineManageJournalList) {
+			medicineManageJournalDTOList.add(new MedicineManageJournalDTO(medicineJournal));
+		}
+
+		return medicineManageJournalDTOList;
 	}
 
 	@GetMapping("/searchMonth")
@@ -53,8 +63,8 @@ public class MedicineManageJournalController {
 	}
 
 	@PostMapping
-	public MedicineManageJournal post(@RequestBody MedicineManageJournal medicineManageJournal) {
-		return medicineManageJournalRepository.save(medicineManageJournal);
+	public MedicineManageJournalDTO post(@RequestBody MedicineManageJournal medicineManageJournal) {
+		return new MedicineManageJournalDTO(medicineManageJournalRepository.save(medicineManageJournal));
 	}
 
 	@DeleteMapping("/{medicineManageSn}")

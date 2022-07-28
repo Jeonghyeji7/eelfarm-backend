@@ -2,10 +2,7 @@ package com.cuuva.springboot.controller;
 
 import com.cuuva.springboot.model.feed.FeedJournal;
 import com.cuuva.springboot.model.feed.FeedJournalDTO;
-import com.cuuva.springboot.model.feed.FeedManageJournal;
-import com.cuuva.springboot.model.feed.FeedManageJournalDTO;
 import com.cuuva.springboot.repository.FeedJournalRepository;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,10 +27,11 @@ public class FeedJournalController {
 
 	@GetMapping("/{feedJournalSn}")
 	public FeedJournalDTO get(@PathVariable Integer feedJournalSn) {
-		FeedJournal feedJournal = feedJournalRepository
-				.findById(feedJournalSn).orElse(null);
+		Optional<FeedJournal> optionalFeedJournal = feedJournalRepository
+				.findById(feedJournalSn);
 
-		return new FeedJournalDTO(feedJournal);
+		return optionalFeedJournal.map(FeedJournalDTO::new).orElse(null);
+
 	}
 
 	@GetMapping
@@ -53,18 +51,18 @@ public class FeedJournalController {
 	}
 
 	@PostMapping
-	public FeedJournal post(@RequestBody FeedJournal feedJournal) {
-		return feedJournalRepository.save(feedJournal);
+	public FeedJournalDTO post(@RequestBody FeedJournal feedJournal) {
+		return new FeedJournalDTO(feedJournalRepository.save(feedJournal));
 	}
 
 	@PutMapping("/{feedJournalSn}/feedOut")
-	public FeedJournal putFeedOut(@PathVariable Integer feedJournalSn, @RequestBody FeedJournal feedJournal) {
+	public FeedJournalDTO putFeedOut(@PathVariable Integer feedJournalSn, @RequestBody FeedJournal feedJournal) {
 		Optional<FeedJournal> optionalCurrentFeedJournal = feedJournalRepository.findById(feedJournalSn);
 
 		if (optionalCurrentFeedJournal.isPresent()) {
 			FeedJournal currentFeedJournal = optionalCurrentFeedJournal.get();
 			currentFeedJournal.setFeedOut(feedJournal.getFeedOut());
-			feedJournalRepository.save(currentFeedJournal);
+			return new FeedJournalDTO(feedJournalRepository.save(currentFeedJournal));
 		}
 
 		return null;

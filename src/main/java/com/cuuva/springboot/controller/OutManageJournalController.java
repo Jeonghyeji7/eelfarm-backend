@@ -1,7 +1,9 @@
 package com.cuuva.springboot.controller;
 
 import com.cuuva.springboot.model.out.OutManageJournal;
+import com.cuuva.springboot.model.out.OutManageJournalDTO;
 import com.cuuva.springboot.repository.OutManageJournalRepository;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,15 +25,23 @@ public class OutManageJournalController {
 	private final OutManageJournalRepository outManageJournalRepository;
 
 	@GetMapping("/isDate")
-	public List<OutManageJournal> getListIsDate(
+	public List<OutManageJournalDTO> getListIsDate(
 		@RequestParam("year") String year,
 		@RequestParam("month") String month,
 		@RequestParam("number") Integer eelFarmSn
 	){
-		return outManageJournalRepository
+		List<OutManageJournal> outManageJournalList = outManageJournalRepository
 			.findAllByOutManageJournalYearAndOutManageJournalMonthAndEelFarmCommonEelFarmSn(
 				year, month, eelFarmSn
 			);
+
+		List<OutManageJournalDTO> outManageJournalDTOList = new ArrayList<>();
+
+		for (OutManageJournal outManageJournal : outManageJournalList) {
+			outManageJournalDTOList.add(new OutManageJournalDTO(outManageJournal));
+		}
+
+		return outManageJournalDTOList;
 	}
 
 	@GetMapping("/searchMonth")
@@ -53,8 +63,8 @@ public class OutManageJournalController {
 	}
 
 	@PostMapping
-	public OutManageJournal post(@RequestBody OutManageJournal outManageJournal) {
-		return outManageJournalRepository.save(outManageJournal);
+	public OutManageJournalDTO post(@RequestBody OutManageJournal outManageJournal) {
+		return new OutManageJournalDTO(outManageJournalRepository.save(outManageJournal));
 	}
 
 	@DeleteMapping("/{outManageSn}")

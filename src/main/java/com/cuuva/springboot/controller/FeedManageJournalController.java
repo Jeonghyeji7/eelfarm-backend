@@ -80,7 +80,7 @@ public class FeedManageJournalController {
 	}
 
 	@PostMapping
-	public FeedManageJournal post(@RequestBody FeedManageJournal feedManageJournal) {
-		return feedmanagejournalRepository.save(feedManageJournal);
+	public FeedManageJournalDTO post(@RequestBody FeedManageJournal feedManageJournal) {
+		return new FeedManageJournalDTO(feedmanagejournalRepository.save(feedManageJournal));
 	}
 }

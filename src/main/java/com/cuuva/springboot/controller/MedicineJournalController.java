@@ -1,7 +1,9 @@
 package com.cuuva.springboot.controller;
 
 import com.cuuva.springboot.model.medicine.MedicineJournal;
+import com.cuuva.springboot.model.medicine.MedicineJournalDTO;
 import com.cuuva.springboot.repository.MedicineJournalRepository;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,19 +26,27 @@ public class MedicineJournalController {
 	private final MedicineJournalRepository medicinejournalRepository;
 
 	@GetMapping
-	public List<MedicineJournal> getList(@RequestParam("medicineManageSn") Integer medicineManageSn){
-		return medicinejournalRepository
+	public List<MedicineJournalDTO> getList(@RequestParam("medicineManageSn") Integer medicineManageSn){
+		List<MedicineJournal> medicineJournalList = medicinejournalRepository
 			.findAllByMedicineManageJournalMedicineManageSn(medicineManageSn);
+
+		List<MedicineJournalDTO> medicineJournalDTOList = new ArrayList<>();
+
+		for (MedicineJournal medicineJournal : medicineJournalList) {
+			medicineJournalDTOList.add(new MedicineJournalDTO(medicineJournal));
+		}
+
+		return medicineJournalDTOList;
 	}
 
 	@PostMapping
-	public MedicineJournal post(@RequestBody MedicineJournal medicineJournal) {
-		return medicinejournalRepository.save(medicineJournal);
+	public MedicineJournalDTO post(@RequestBody MedicineJournal medicineJournal) {
+		return new MedicineJournalDTO(medicinejournalRepository.save(medicineJournal));
 	}
 
 	@PutMapping
-	public MedicineJournal put(@RequestBody MedicineJournal medicineJournal) {
-		return medicinejournalRepository.save(medicineJournal);
+	public MedicineJournalDTO put(@RequestBody MedicineJournal medicineJournal) {
+		return new MedicineJournalDTO(medicinejournalRepository.save(medicineJournal));
 	}
 
 	@DeleteMapping("/{medicineSn}")

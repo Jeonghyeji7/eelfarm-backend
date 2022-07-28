@@ -1,7 +1,9 @@
 package com.cuuva.springboot.controller;
 
 import com.cuuva.springboot.model.out.OutJournal;
+import com.cuuva.springboot.model.out.OutJournalDTO;
 import com.cuuva.springboot.repository.OutJournalRepository;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,19 +26,27 @@ public class OutJournalController {
 	private final OutJournalRepository outjournalRepository;
 
 	@GetMapping
-	public List<OutJournal> getList(@RequestParam("outManageJournalSn") Integer outManageJournalSn){
-		return outjournalRepository
+	public List<OutJournalDTO> getList(@RequestParam("outManageJournalSn") Integer outManageJournalSn){
+		List<OutJournal> outJournalList = outjournalRepository
 			.findAllByOutManageJournalOutManageJournalSn(outManageJournalSn);
+
+		List<OutJournalDTO> outJournalDTOList = new ArrayList<>();
+
+		for (OutJournal outJournal : outJournalList) {
+			outJournalDTOList.add(new OutJournalDTO(outJournal));
+		}
+
+		return outJournalDTOList;
 	}
 
 	@PostMapping
-	public OutJournal post(@RequestBody OutJournal outJournal) {
-		return outjournalRepository.save(outJournal);
+	public OutJournalDTO post(@RequestBody OutJournal outJournal) {
+		return new OutJournalDTO(outjournalRepository.save(outJournal));
 	}
 
 	@PutMapping
-	public OutJournal put(@RequestBody OutJournal outJournal) {
-		return outjournalRepository.save(outJournal);
+	public OutJournalDTO put(@RequestBody OutJournal outJournal) {
+		return new OutJournalDTO(outjournalRepository.save(outJournal));
 	}
 
 	@DeleteMapping("/{outJournalSn}")
