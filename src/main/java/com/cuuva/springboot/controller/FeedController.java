@@ -5,7 +5,6 @@ import com.cuuva.springboot.repository.FeedRepository;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,6 +47,19 @@ public class FeedController {
 		if (optionalCurrentFeed.isPresent()) {
 			Feed currentFeed = optionalCurrentFeed.get();
 			currentFeed.setFeedStandard(feed.getFeedStandard());
+			feedRepository.save(currentFeed);
+		}
+
+		return null;
+	}
+
+	@PutMapping("/{feedCode}/seller")
+	public Feed putSeller(@PathVariable Integer feedCode, @RequestBody Feed feed) {
+		Optional<Feed> optionalCurrentFeed = feedRepository.findById(feedCode);
+
+		if (optionalCurrentFeed.isPresent()) {
+			Feed currentFeed = optionalCurrentFeed.get();
+			currentFeed.setFeedSellerCode(feed.getFeedSellerCode());
 			feedRepository.save(currentFeed);
 		}
 
